@@ -68,6 +68,8 @@ kubectl get inferenceservice sklearn-iris -n ml
 
 ### Port-forward to access the model
 
+<img width="1077" height="240" alt="image" src="https://github.com/user-attachments/assets/c005adb4-286a-4533-b443-80a51c55bbfa" />
+
 ```
 kubectl -n ml port-forward svc/<svc-name> 8080:80
 ```
@@ -75,9 +77,11 @@ kubectl -n ml port-forward svc/<svc-name> 8080:80
 ### Inference the Model
 
 ```
-curl -s -X POST http://localhost:8080/v1/models/intent-classifier:predict \
+curl -s -X POST http://localhost:8080/v1/models/sklearn-iris:predict \
   -H "Content-Type: application/json" \
-  -d '{"instances":["I want to cancel my subscription"]}' | jq
+  -d '{"instances":[[5.9,3.0,5.1,1.8]]}' | jq
 ```
+
+<img width="1127" height="307" alt="image" src="https://github.com/user-attachments/assets/1286a598-f2da-48c7-a302-8f9a1458274b" />
 
 
