@@ -26,6 +26,12 @@ helm install kserve oci://ghcr.io/kserve/charts/kserve-resources \
   --namespace $NAMESPACE
 ```
 
+## Apply cluster resources
+```
+kubectl apply --server-side -f https://github.com/kserve/kserve/releases/download/v0.20.0/kserve-cluster-resources.yaml  
+kubectl get clusterservingruntime
+```
+
 ### Deploy the Intent Classifier model
 
 ```
@@ -57,6 +63,16 @@ kubectl get inferenceservice sklearn-iris -n ml
 
 `kubectl logs kserve-controller-manager-66678b8767-8q4vl --all-containers -n kserve`
 
+
+```
+kubectl edit inferenceservice sklearn-iris -n ml  
+  
+  
+modelFormat:
+  name: sklearn
+  version: "1"
+```
+
 <img width="1916" height="630" alt="image" src="https://github.com/user-attachments/assets/860186e5-5d8d-428f-b5db-e3338bff9e42" />
 
 
@@ -87,7 +103,7 @@ curl -s -X POST http://localhost:8080/v1/models/sklearn-iris:predict \
 # Kserve Demonstration for Iris model
 
 - Install cert manager , follow above
-- Install CRD, follow above steps
+- Install CRD, Controller and apply cluster resources - follow above steps
 
 
 ---
