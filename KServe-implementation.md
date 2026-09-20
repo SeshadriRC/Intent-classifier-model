@@ -1,4 +1,4 @@
-# Kserve Demonstration for Iris model
+# Kserve Demonstration for sample model
 
 ### Install Cert Manager
 
@@ -9,22 +9,21 @@ kubectl apply -f https://github.com/cert-manager/cert-manager/releases/latest/do
 ### Install KServe CRDs
 
 ```
-kubectl create namespace kserve
+export NAMESPACE="kserve"
 
 helm install kserve-crd oci://ghcr.io/kserve/charts/kserve-crd \
-  --version v0.16.0 \
-  -n kserve \
-  --wait
+  --version v0.20.0 \
+  --namespace $NAMESPACE \
+  --create-namespace
 ```
 
 ### Install KServe controller
 
 ```
-helm install kserve oci://ghcr.io/kserve/charts/kserve \
-  --version v0.16.0 \
-  -n kserve \
-  --set kserve.controller.deploymentMode=RawDeployment \
-  --wait
+helm install kserve oci://ghcr.io/kserve/charts/kserve-resources \
+  --version v0.20.0 \
+  --set kserve.controller.deploymentMode=Standard \
+  --namespace $NAMESPACE
 ```
 
 ### Deploy the Intent Classifier model
@@ -84,4 +83,11 @@ curl -s -X POST http://localhost:8080/v1/models/sklearn-iris:predict \
 
 <img width="1127" height="307" alt="image" src="https://github.com/user-attachments/assets/1286a598-f2da-48c7-a302-8f9a1458274b" />
 
+---
+# Kserve Demonstration for Iris model
 
+- Install cert manager , follow above
+- Install CRD, follow above steps
+
+
+---
