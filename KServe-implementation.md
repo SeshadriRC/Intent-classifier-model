@@ -122,5 +122,63 @@ py -3.12 model/train.py
 
 <img width="1267" height="203" alt="image" src="https://github.com/user-attachments/assets/fd703e9b-6335-4edd-a2dd-1fdab4119083" />
 
+## Create a tag
 
+Tag icon --> Create new release
+
+<img width="1902" height="858" alt="image" src="https://github.com/user-attachments/assets/7d3e1b2d-d22b-4793-bb8b-a525cedac8a2" />
+
+- Create a new tag
+
+<img width="1126" height="602" alt="image" src="https://github.com/user-attachments/assets/5a3eee71-f943-4230-97d4-d0d4b2aeb688" />
+
+<img width="1590" height="755" alt="image" src="https://github.com/user-attachments/assets/0437679f-aa4b-44d1-bc38-c8cdf81d1fde" />
+
+<img width="1637" height="375" alt="image" src="https://github.com/user-attachments/assets/2c1f8ced-82c1-4d67-a4ad-fde46f18101f" />
+
+<img width="1507" height="622" alt="image" src="https://github.com/user-attachments/assets/0aac04a5-d2ef-49b8-a664-6635de9acab6" />
+
+<img width="1881" height="790" alt="image" src="https://github.com/user-attachments/assets/a2aedb73-0485-458c-9f79-80e981a2a8c7" />
+
+
+- use below yaml, replace the storeUri
+
+```yaml
+kubectl create namespace intent
+
+cat <<EOF | kubectl apply -n intent -f -
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: intent-classifier
+spec:
+  predictor:
+    model:
+      modelFormat:
+        name: sklearn
+      storageUri: "https://github.com/SeshadriRC/Intent-classifier-model/releases/download/1.0/intent_model.pkl"
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "512Mi"
+        limits:
+          cpu: "1"
+          memory: "1Gi"
+EOF
+
+kubectl get inferenceservice intent-classifier -n intent
+```
+
+<img width="1852" height="525" alt="image" src="https://github.com/user-attachments/assets/0c9d7e49-2749-49ef-8f4b-7e259c62124a" />
+
+- port forward and test it on other terminal
+
+```bash
+kubectl port-forward svc/intent-classifier-predictor 8080:80 -n intent --address 0.0.0.0
+```
+
+```bash
+curl -s -X POST http://localhost:8080/v1/models/intent-classifier:predict \
+  -H "Content-Type: application/json" \
+  -d '{"instances":["good night"]}' | jq
 ---
