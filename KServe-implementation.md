@@ -104,6 +104,23 @@ curl -s -X POST http://localhost:8080/v1/models/sklearn-iris:predict \
 
 - Install cert manager , follow above
 - Install CRD, Controller and apply cluster resources - follow above steps
+- Here we are uploading a `.pkl` to the git repo, so first we need to generate the `.pkl` file as it doesn't exit now
+- Generate here
+
+<img width="1396" height="237" alt="image" src="https://github.com/user-attachments/assets/c17eb384-8f2a-4348-ac7d-fae9fe550520" />
+
+
+```bash
+py -3.12 -m venv .venv
+source .venv/Scripts/activate
+
+py -3.12 -m pip install -r requirements.txt
+py -3.12 model/train.py 
+```
+
+<img width="1556" height="270" alt="image" src="https://github.com/user-attachments/assets/ad0fc25b-d420-4cec-bb96-22056f1a9235" />
+
+<img width="1267" height="203" alt="image" src="https://github.com/user-attachments/assets/fd703e9b-6335-4edd-a2dd-1fdab4119083" />
 
 
 ---
