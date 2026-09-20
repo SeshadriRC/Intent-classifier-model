@@ -182,3 +182,6 @@ curl -s -X POST http://localhost:8080/v1/models/intent-classifier:predict \
   -H "Content-Type: application/json" \
   -d '{"instances":["good night"]}' | jq
 ---
+
+<img width="1347" height="573" alt="image" src="https://github.com/user-attachments/assets/9a968586-852b-4364-947d-ab04ef56836f" />
+
